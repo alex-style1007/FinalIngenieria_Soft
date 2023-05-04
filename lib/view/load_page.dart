@@ -1,73 +1,119 @@
-import 'dart:io';
-import 'dart:async';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:google_drive/google_drive.dart';
+import 'package:image_picker/image_picker.dart';
 
-void main() {
-  runApp(const MyApp());
+class ViewController extends StatefulWidget {
+  @override
+  _ViewControllerState createState() => _ViewControllerState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class _ViewControllerState extends State<ViewController> {
+  late File _image;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My App',
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  // Get the Google Drive client.
-                  final drive = GoogleDrive(
-                    clientId: 'YOUR_CLIENT_ID',
-                    clientSecret: 'YOUR_CLIENT_SECRET',
-                  );
-
-                  // Get the image file from Google Drive.
-                  final imageFile = await drive.files.get(
-                    fileId: 'YOUR_FILE_ID',
-                  );
-
-                  // If the file was found, display it.
-                  if (imageFile != null) {
-                    final image = Image.file(imageFile.path);
-                    final container = SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: image,
-                    );
-
-                    // Add a button at the bottom called sort.
-                    final button = ElevatedButton(
-                      onPressed: () {
-                        // Sort the images.
-                        // ...
-                      },
-                      child: Text('Sort'),
-                    );
-
-                    // Return the container and the button.
-                    return Column(
-                      children: [
-                        container,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        button,
-                      ],
-                    );
-                  }
-                },
-                child: Text('Upload Image'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image Viewer'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: 200,
+                child: _image == null ? Text('No image selected.') : Image.file(_image),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Pick an image from the gallery
+                    ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
+                      setState(() {
+                        _image = image as File;
+                      });
+                    });
+                  },
+                  child: const Text('Select Image'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Analyze the image
+                    if (_image == null) {
+                      return;
+                    }
+
+
+                    // Display the analysis results
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Analysis Results'),
+                          content: const Text("analysis"),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Text('Analyze'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Push the history view controller onto the navigation stack
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return HistoryViewController(image: _image);
+                        },
+                      ),
+                    );
+                  },
+                  child: Text('History'),
+                ),
+              ],
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class HistoryViewController extends StatelessWidget {
+  final image;
+
+  HistoryViewController({Key key, this.image}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('History'),
+      ),
+      body: ListView(
+        children: [
+          Image(image: image),
+        ],
       ),
     );
   }
