@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:html' show File;
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +20,7 @@ class _ViewControllerState extends State<ViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Viewer'),
+        title: const Text('Image Viewer'),
       ),
       body: Center(
         child: Column(
@@ -74,7 +74,7 @@ class _ViewControllerState extends State<ViewController> {
                       },
                     );
                   },
-                  child: Text('Analyze'),
+                  child: const Text('Analyze'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -88,7 +88,7 @@ class _ViewControllerState extends State<ViewController> {
                       ),
                     );
                   },
-                  child: Text('History'),
+                  child: const Text('History'),
                 ),
               ],
             ),
@@ -108,7 +108,7 @@ class HistoryViewController extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('History'),
+        title: const Text('History'),
       ),
       body: ListView(
         children: [
