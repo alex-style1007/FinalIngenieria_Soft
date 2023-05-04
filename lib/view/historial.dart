@@ -1,3 +1,11 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +18,7 @@
             children: [
               ListView(
                 children: [
-                  ListTile( //cada fila tiene una imagen con titulo y subtitulo
+                  ListTile(
                     leading: Image.asset('assets/images/image1.jpg'),
                     title: const Text('This is the title of the image'),
                     subtitle: const Text('This is the subtitle of the image'),

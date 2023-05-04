@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_drive/google_drive.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,13 +22,20 @@ class MyApp extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  // Open the image picker.
-                  final imagePicker = ImagePicker();
-                  final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+                  // Get the Google Drive client.
+                  final drive = GoogleDrive(
+                    clientId: 'YOUR_CLIENT_ID',
+                    clientSecret: 'YOUR_CLIENT_SECRET',
+                  );
 
-                  // If the user picked an image, display it.
-                  if (pickedFile != null) {
-                    final image = Image.file(pickedFile);
+                  // Get the image file from Google Drive.
+                  final imageFile = await drive.files.get(
+                    fileId: 'YOUR_FILE_ID',
+                  );
+
+                  // If the file was found, display it.
+                  if (imageFile != null) {
+                    final image = Image.file(imageFile.path);
                     final container = SizedBox(
                       width: 200,
                       height: 200,
@@ -60,7 +71,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-}
-
-class ImageSource {
 }
