@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
             children: [
               ListView(
                 children: [
-                  ListTile(
+                  ListTile( //cada fila tiene una imagen con titulo y subtitulo
                     leading: Image.asset('assets/images/image1.jpg'),
                     title: const Text('This is the title of the image'),
                     subtitle: const Text('This is the subtitle of the image'),

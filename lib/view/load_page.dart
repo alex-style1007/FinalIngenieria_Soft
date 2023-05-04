@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Open the image picker.
                   final imagePicker = ImagePicker();
                   final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -60,4 +60,7 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class ImageSource {
 }
