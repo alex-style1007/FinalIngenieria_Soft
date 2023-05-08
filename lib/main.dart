@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view/load_page.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  //const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Login',
-      home:  LoginView(),
+    return  MaterialApp(
+      title: 'Identificación de animales',
+      home: LoadPage(),// para establecer a load page como página de inicio
     );
   }
 }
@@ -49,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
             ),
-            SizedBox(
+             SizedBox(
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
