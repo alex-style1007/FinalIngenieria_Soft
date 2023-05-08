@@ -3,11 +3,11 @@ import 'package:flutter_application_1/view/load_page.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  //const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _LoginViewState extends State<LoginView> {
                 child: TextField(
                   obscureText: true,
                   controller: _passwordController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                   ),
                 ),
@@ -84,12 +84,5 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-
-  bool _obscureText = true;
-
-  void _toggleObscureText() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+  
 }

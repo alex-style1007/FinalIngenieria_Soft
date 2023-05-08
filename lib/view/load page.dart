@@ -51,8 +51,9 @@
 
 //Pruebas archivo inicial
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
@@ -72,15 +73,16 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Load the image from the device.
-                  final image = FilePicker(source: ImageSource.gallery);
+                  final picker = ImagePicker();
+                  final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
                   // Display the image in a container that is not very large.
                   final container = SizedBox(
                     width: 200,
                     height: 200,
-                    child: image,
+                    child: pickedFile != null ? Image.file(File(pickedFile.path)) : const SizedBox.shrink(),
                   );
 
                   // Add a button at the bottom called classify.
@@ -89,21 +91,21 @@ class MyApp extends StatelessWidget {
                       // Classify the image.
                       // ...
                     },
-                    child: Text('Classify'),
+                    child: const Text('Classify'),
                   );
 
                   // Return the container and the button.
-                  return Column(
-                    children: [
-                      container,
-                      SizedBox(
-                        height: 20,
-                      ),
-                      button,
-                    ],
-                  );
+                  // return Column(
+                  //   children: [
+                  //     container,
+                  //     const SizedBox(
+                  //       height: 20,
+                  //     ),
+                  //     button,
+                  //   ],
+                  // );
                 },
-                child: Text('Load Image'),
+                child: const Text('Load Image'),
               ),
             ],
           ),
