@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  // Load the image from the device.
+                  // Cargar la imagen desde el dispositivo.
                   final picker = ImagePicker();
                   final pickedFile = await picker.getImage(source: ImageSource.gallery);
 

@@ -3,32 +3,27 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class LoadPage extends StatefulWidget {
+  const LoadPage({super.key});
   @override
-  _LoadPageState createState() => _LoadPageState();
+  State<LoadPage> createState() => _LoadPageState();
 }
 
 class _LoadPageState extends State<LoadPage> {
-  late File _imageFile;
+  File? _imageFile;
+  bool isLoaded = false;
   final picker = ImagePicker();
 
   Future<void> _getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
+        isLoaded = true;
         _imageFile = File(pickedFile.path);
       } else {
         print('No se ha seleccionado ninguna imagen.');
       }
     });
-  }
-
-  Widget _buildImage() {
-    if (_imageFile != null) {
-      return Image.file(_imageFile);
-    } else {
-      return Text('No hay imagen cargada');
-    }
   }
 
   void _navigateToPredictedAnimal() {
@@ -58,7 +53,12 @@ class _LoadPageState extends State<LoadPage> {
       ),
       body: Column(
         children: <Widget>[
-          _buildImage(),
+          Visibility(
+            visible: isLoaded,
+            replacement: Text('No hay imagen cargada'),
+            child: Image.file(_imageFile!)
+
+          ),
           _buildButtons(context),
         ],
       ),
