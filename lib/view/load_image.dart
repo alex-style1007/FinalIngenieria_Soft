@@ -2,6 +2,7 @@ import 'dart:html' show File;
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 
 class ViewController extends StatefulWidget {
   @override

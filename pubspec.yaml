@@ -17,6 +17,9 @@ dependencies:
   photo_view_web: ^0.13.0
   flutter:
     sdk: flutter
+  camera:
+  path_provider:
+  path:
 
   cupertino_icons: ^1.0.2
   google_sign_in: ^6.1.0
