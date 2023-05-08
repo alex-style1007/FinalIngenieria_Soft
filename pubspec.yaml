@@ -9,10 +9,12 @@ environment:
 
 dependencies:
   file_picker:
-  image_picker_web: 
   images_picker:
   image_picker_for_web: 
-  image_picker_gallery_camera: 
+  image_picker_gallery_camera: ^0.2.2
+  image_picker_web: ^0.8.0
+  image_cropper_web: ^1.0.0
+  photo_view_web: ^0.13.0
   flutter:
     sdk: flutter
 
