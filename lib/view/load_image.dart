@@ -1,57 +1,71 @@
-import 'dart:html' show File;
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 
-class ViewController extends StatefulWidget {
+class ImagePickerView extends StatefulWidget {
   @override
-  _ViewControllerState createState() => _ViewControllerState();
+  _ImagePickerViewState createState() => _ImagePickerViewState();
 }
 
-class _ViewControllerState extends State<ViewController> {
-  late File _image;
+class _ImagePickerViewState extends State<ImagePickerView> {
+  late File _imageFile;
 
-  @override
-  void initState() {
-    super.initState();
+  Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.getImage(source: source);
+    setState(() {
+      _imageFile = File(pickedImage!.path);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Vista de imagen'),
+        title: Text('Image Picker'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 200,
-                child: _image == null ? Text('No hay imagen seleccionada') : Image.file(_image),
+        child: _imageFile == null
+            ? Text('No image selected')
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.file(_imageFile, height: 200),
+                  SizedBox(height: 16),
+                  Text('Image selected'),
+                ],
               ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Pick an image from the gallery
-                    ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
-                      setState(() {
-                        _image = image as File;
-                      });
-                    });
-                  },
-                  child: const Text('Select Image'),
-                ),
-              ],
-            ),
-          ],
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text('Photo Library'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _pickImage(ImageSource.gallery);
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('Camera'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _pickImage(ImageSource.camera);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Icon(Icons.add_a_photo),
       ),
     );
   }
