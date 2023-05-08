@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view/load_page.dart';
 import 'package:flutter_application_1/view/test.dart';
 
 class LoginView extends StatefulWidget {
@@ -54,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
                   ElevatedButton(
                     onPressed: () {
                       if (_usernameController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_){return MyHomePage();}));
+                        Navigator.push(context, MaterialPageRoute(builder: (_){return Picker();}));
                       }
                     },
                     child: const Text('Login'),

@@ -7,11 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Picker());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Picker extends StatelessWidget {
+  const Picker({super.key});
 
   @override
   Widget build(BuildContext context) {
