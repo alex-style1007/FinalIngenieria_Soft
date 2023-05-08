@@ -1,8 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerView extends StatefulWidget {
+  const ImagePickerView({super.key});
+
   @override
   _ImagePickerViewState createState() => _ImagePickerViewState();
 }
@@ -22,17 +26,17 @@ class _ImagePickerViewState extends State<ImagePickerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Picker'),
+        title: const Text('Image Picker'),
       ),
       body: Center(
         child: _imageFile == null
-            ? Text('No image selected')
+            ? const Text('No image selected')
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.file(_imageFile, height: 200),
-                  SizedBox(height: 16),
-                  Text('Image selected'),
+                  const SizedBox(height: 16),
+                  const Text('Image selected'),
                 ],
               ),
       ),
@@ -45,16 +49,16 @@ class _ImagePickerViewState extends State<ImagePickerView> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: Icon(Icons.photo_library),
-                    title: Text('Photo Library'),
+                    leading: const Icon(Icons.photo_library),
+                    title: const Text('Photo Library'),
                     onTap: () {
                       Navigator.pop(context);
                       _pickImage(ImageSource.gallery);
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.photo_camera),
-                    title: Text('Camera'),
+                    leading: const Icon(Icons.photo_camera),
+                    title: const Text('Camera'),
                     onTap: () {
                       Navigator.pop(context);
                       _pickImage(ImageSource.camera);
@@ -65,7 +69,7 @@ class _ImagePickerViewState extends State<ImagePickerView> {
             },
           );
         },
-        child: Icon(Icons.add_a_photo),
+        child: const Icon(Icons.add_a_photo),
       ),
     );
   }
