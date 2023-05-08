@@ -20,7 +20,7 @@ class _ViewControllerState extends State<ViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Image Viewer'),
+        title: const Text('Vista de imagen'),
       ),
       body: Center(
         child: Column(
@@ -29,7 +29,7 @@ class _ViewControllerState extends State<ViewController> {
             Expanded(
               child: SizedBox(
                 height: 200,
-                child: _image == null ? Text('No image selected.') : Image.file(_image),
+                child: _image == null ? Text('No hay imagen seleccionada') : Image.file(_image),
               ),
             ),
             const SizedBox(height: 20),
@@ -47,73 +47,10 @@ class _ViewControllerState extends State<ViewController> {
                   },
                   child: const Text('Select Image'),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Analyze the image
-                    if (_image == null) {
-                      return;
-                    }
-
-
-                    // Display the analysis results
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Analysis Results'),
-                          content: const Text("analysis"),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: const Text('Analyze'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Push the history view controller onto the navigation stack
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return HistoryViewController(image: _image);
-                        },
-                      ),
-                    );
-                  },
-                  child: const Text('History'),
-                ),
               ],
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class HistoryViewController extends StatelessWidget {
-  final image;
-
-  HistoryViewController({Key key, this.image}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('History'),
-      ),
-      body: ListView(
-        children: [
-          Image(image: image),
-        ],
       ),
     );
   }

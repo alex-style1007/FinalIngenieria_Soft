@@ -56,7 +56,7 @@ class _LoginViewState extends State<LoginView> {
                 child: TextField(
                   obscureText: true,
                   controller: _passwordController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                   ),
                 ),
