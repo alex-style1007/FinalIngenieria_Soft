@@ -240,6 +240,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  /* 
+  
+    ElevatedButton(
+      child: Text("Cargar imiagen"),
+      onPressed: (){
+
+      }, onTap
+    )
+  */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -287,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 isVideo = false;
                 _onImageButtonPressed(ImageSource.gallery, context: context);
-              },
+              },        
               heroTag: 'image0',
               tooltip: 'Pick Image from gallery',
               child: const Icon(Icons.photo),
