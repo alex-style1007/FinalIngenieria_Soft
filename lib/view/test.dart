@@ -16,8 +16,9 @@ class Picker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Image Picker Demo',
+      title: 'Cargar imagenes',
       home: MyHomePage(title: 'Seleccionar Imagen'),
+      
     );
   }
 }
