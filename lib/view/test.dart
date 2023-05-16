@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
 void main() {
-  runApp(const Picker());
+  runApp  (const Picker());
 }
 
 class Picker extends StatelessWidget {
@@ -17,7 +17,7 @@ class Picker extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Image Picker Demo',
-      home: MyHomePage(title: 'Image Picker Example'),
+      home: MyHomePage(title: 'Seleccionar Imagen'),
     );
   }
 }
@@ -74,54 +74,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _onImageButtonPressed(ImageSource source,
-      {BuildContext? context, bool isMultiImage = false}) async {
-    if (_controller != null) {
-      await _controller!.setVolume(0.0);
-    }
-    if (isVideo) {
-      final XFile? file = await _picker.pickVideo(
-          source: source, maxDuration: const Duration(seconds: 10));
-      await _playVideo(file);
-    } else if (isMultiImage) {
-      await _displayPickImageDialog(context!,
-          (double? maxWidth, double? maxHeight, int? quality) async {
-        try {
-          final List<XFile> pickedFileList = await _picker.pickMultiImage(
-            maxWidth: maxWidth,
-            maxHeight: maxHeight,
-            imageQuality: quality,
-          );
-          setState(() {
-            _imageFileList = pickedFileList;
-          });
-        } catch (e) {
-          setState(() {
-            _pickImageError = e;
-          });
-        }
-      });
-    } else {
-      await _displayPickImageDialog(context!,
-          (double? maxWidth, double? maxHeight, int? quality) async {
-        try {
-          final XFile? pickedFile = await _picker.pickImage(
-            source: source,
-            maxWidth: maxWidth,
-            maxHeight: maxHeight,
-            imageQuality: quality,
-          );
-          setState(() {
-            _setImageFileListFromFile(pickedFile);
-          });
-        } catch (e) {
-          setState(() {
-            _pickImageError = e;
-          });
-        }
-      });
-    }
-  }
+
+  Future<void> _onFileButtonPressed() async {
+  final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  setState(() {
+    _setImageFileListFromFile(pickedFile);
+  });
+}
+
 
   @override
   void deactivate() {
@@ -202,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     } else {
       return const Text(
-        'You have not yet picked an image.',
+        'No has cargado ninguna imagen.',
         textAlign: TextAlign.center,
       );
     }
@@ -278,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       } else {
                         return const Text(
-                          'You have not yet picked an image.',
+                          'No has cargado ninguna imagen',
                           textAlign: TextAlign.center,
                         );
                       }
@@ -288,77 +248,33 @@ class _MyHomePageState extends State<MyHomePage> {
             : _handlePreview(),
       ),
       
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Semantics(
-            label: 'image_picker_example_from_gallery',
-            child: FloatingActionButton(
-              onPressed: () {
-                isVideo = false;
-                _onImageButtonPressed(ImageSource.gallery, context: context);
-              },        
-              heroTag: 'image0',
-              tooltip: 'Pick Image from gallery',
-              child: const Icon(Icons.photo),
-            ),
+      
+floatingActionButton: Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Container(
+      width: 200,
+      child: ElevatedButton(
+        onPressed: _onFileButtonPressed, // Llama a la nueva función _onFileButtonPressed(),q
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3.0),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 16.0),
-          //   child: FloatingActionButton(
-          //     onPressed: () {
-          //       isVideo = false;
-          //       _onImageButtonPressed(
-          //         ImageSource.gallery,
-          //         context: context,
-          //         isMultiImage: true,
-          //       );
-          //     },
-          //     heroTag: 'image1',
-          //     tooltip: 'Pick Multiple Image from gallery',
-          //     child: const Icon(Icons.photo_library),
-          //   ),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 16.0),
-          //   child: FloatingActionButton(
-          //     onPressed: () {
-          //       isVideo = false;
-          //       _onImageButtonPressed(ImageSource.camera, context: context);
-          //     },
-          //     heroTag: 'image2',
-          //     tooltip: 'Take a Photo',
-          //     child: const Icon(Icons.camera_alt),
-          //   ),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 16.0),
-          //   child: FloatingActionButton(
-          //     backgroundColor: Colors.red,
-          //     onPressed: () {
-          //       isVideo = true;
-          //       _onImageButtonPressed(ImageSource.gallery);
-          //     },
-          //     heroTag: 'video0',
-          //     tooltip: 'Pick Video from gallery',
-          //     child: const Icon(Icons.video_library),
-          //   ),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 16.0),
-          //   child: FloatingActionButton(
-          //     backgroundColor: Colors.red,
-          //     onPressed: () {
-          //       isVideo = true;
-          //       _onImageButtonPressed(ImageSource.camera);
-          //     },
-          //     heroTag: 'video1',
-          //     tooltip: 'Take a Video',
-          //     child: const Icon(Icons.videocam),
-          //   ),
-          // ),
-        ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            SizedBox(width: 10),
+            Text('Cargar imagen'),
+          ],
+        ),
       ),
+    ),
+  ],
+),
+
+
+
     );
   }
 
@@ -371,63 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return null;
   }
 
-  Future<void> _displayPickImageDialog(
-      BuildContext context, OnPickImageCallback onPick) async {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Add optional parameters'),
-            content: Column(
-              children: <Widget>[
-                TextField(
-                  controller: maxWidthController,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                      hintText: 'Enter maxWidth if desired'),
-                ),
-                TextField(
-                  controller: maxHeightController,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                      hintText: 'Enter maxHeight if desired'),
-                ),
-                TextField(
-                  controller: qualityController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      hintText: 'Enter quality if desired'),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('CANCEL'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                  child: const Text('PICK'),
-                  onPressed: () {
-                    final double? width = maxWidthController.text.isNotEmpty
-                        ? double.parse(maxWidthController.text)
-                        : null;
-                    final double? height = maxHeightController.text.isNotEmpty
-                        ? double.parse(maxHeightController.text)
-                        : null;
-                    final int? quality = qualityController.text.isNotEmpty
-                        ? int.parse(qualityController.text)
-                        : null;
-                    onPick(width, height, quality);
-                    Navigator.of(context).pop();
-                  }),
-            ],
-          );
-        });
-  }
+  
 }
 
 typedef OnPickImageCallback = void Function(
@@ -482,3 +342,4 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
     }
   }
 }
+
