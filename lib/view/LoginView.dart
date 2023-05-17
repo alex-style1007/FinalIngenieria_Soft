@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view/historial.dart';
-import 'package:flutter_application_1/view/load_page.dart';
-import 'package:flutter_application_1/view/test.dart';
+import 'package:flutter_application_1/view/home_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -36,7 +34,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
             ),
-             SizedBox(
+            SizedBox(
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -55,26 +53,15 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      if (_usernameController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_){return Picker();}));
+                      if (true /* _usernameController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty */
+                          ) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return HomeView();
+                        }));
                       }
                     },
                     child: const Text('Login'),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_usernameController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_){return HistoryView();}));
-                      }
-                    },
-                    child: const Text('Ir al historial'),
                   ),
                 ],
               ),
