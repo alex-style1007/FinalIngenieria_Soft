@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
-void main() {
-  runApp  (const Picker());
-}
+// void main() {
+//   runApp  (const Picker());
+// }
 
 class Picker extends StatelessWidget {
   const Picker({super.key});

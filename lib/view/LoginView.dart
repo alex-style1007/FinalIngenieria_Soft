@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view/historial.dart';
 import 'package:flutter_application_1/view/load_page.dart';
 import 'package:flutter_application_1/view/test.dart';
 
@@ -59,6 +60,21 @@ class _LoginViewState extends State<LoginView> {
                       }
                     },
                     child: const Text('Login'),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_usernameController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_){return HistoryView();}));
+                      }
+                    },
+                    child: const Text('Ir al historial'),
                   ),
                 ],
               ),
